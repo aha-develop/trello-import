@@ -1,0 +1,27 @@
+{
+  "name": "@aha-develop/trello-import",
+  "description": "Trello import",
+  "version": "0.0.0",
+  "author": "Aha! (support@aha.io)",
+  "repository": {
+    "type": "git",
+    "url": "TODO: Add the GitHub URL to your extension in package.json"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "aha-cli": "1.9.7"
+  },
+  "ahaExtension": {
+    "cspSources": [
+      "https://api.trello.com"
+    ],
+    "contributes": {
+      "importers": {
+        "cards": {
+          "title": "Trello cards",
+          "entryPoint": "src/importers/cards.js"
+        }
+      }
+    }
+  }
+}
