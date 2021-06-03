@@ -17,7 +17,14 @@ async function trelloGet(path) {
 
   return fetch(request).then((response) => {
     if (!response.ok) {
-      throw new Error(`Trello API error: ${response.status}`);
+      if (response.status === 401) {
+        throw new aha.AuthError(
+          `Trello authentication error: ${response.status}`,
+          "trello"
+        );
+      } else {
+        throw new Error(`Trello API error: ${response.status}`);
+      }
     }
 
     return response.json();
@@ -41,6 +48,7 @@ importer.on(
         name: card.name,
         url: card.url,
         description: card.desc,
+        labels: card.labels,
       })),
     };
   }
@@ -98,6 +106,13 @@ importer.on(
         importRecord.url
       )}'>View on Trello</a></p>`;
 
+    ahaRecord.tagList = importRecord.labels
+      .map((label) => (label.name === "" ? label.color : label.name))
+      .join(",");
+
+    success = await ahaRecord.save();
+    if (!success) return false;
+
     // Create a requirement with tasks for each checklist
     const checklists = await trelloGet(
       `/cards/${importRecord.uniqueId}/checklists`
@@ -108,12 +123,12 @@ importer.on(
         name: list.name,
         feature: ahaRecord,
       });
+
       success = await requirement.save({
         args: {
           skipRequiredFieldsValidation: true,
         },
       });
-
       if (!success) return false;
 
       const tasks = list.checkItems.map((item, i) => {
@@ -138,6 +153,6 @@ importer.on(
       }
     }
 
-    return ahaRecord.save();
+    return true;
   }
 );
