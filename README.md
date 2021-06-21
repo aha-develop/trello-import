@@ -4,10 +4,10 @@ This [Aha! Develop](https://www.aha.io/develop/overview) extension allows you to
 
 - Description (as HTML)
 - Checklists (as Aha! requirements with to-dos for each item)
+- Labels (as Aha! tags)
 
 Coming soon:
 
-- Labels (as Aha! tags)
 - Attachments
 - Comments
 
