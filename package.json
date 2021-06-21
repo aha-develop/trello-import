@@ -1,11 +1,11 @@
 {
   "name": "@aha-develop/trello-import",
   "description": "Trello import",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Aha! (support@aha.io)",
   "repository": {
     "type": "git",
-    "url": "TODO: Add the GitHub URL to your extension in package.json"
+    "url": "https://github.com/aha-develop/trello-import"
   },
   "license": "MIT",
   "devDependencies": {

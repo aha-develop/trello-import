@@ -100,12 +100,14 @@ importer.on(
   async ({ importRecord, ahaRecord }, { identifier, settings }) => {
     let success = false;
 
+    // Import Markdown description as HTML, with a link back to the original card
     ahaRecord.description =
       marked(importRecord.description) +
       `<p><a href='${aha.sanitizeUrl(
         importRecord.url
       )}'>View on Trello</a></p>`;
 
+    // Import tags as labels
     ahaRecord.tagList = importRecord.labels
       .map((label) => (label.name === "" ? label.color : label.name))
       .join(",");
@@ -113,7 +115,7 @@ importer.on(
     success = await ahaRecord.save();
     if (!success) return false;
 
-    // Create a requirement with tasks for each checklist
+    // Import checklists as requirements
     const checklists = await trelloGet(
       `/cards/${importRecord.uniqueId}/checklists`
     );
@@ -131,6 +133,7 @@ importer.on(
       });
       if (!success) return false;
 
+      // Import checklist items as todos on the requirement
       const tasks = list.checkItems.map((item, i) => {
         const status =
           item.state === "complete"
