@@ -15,9 +15,7 @@ It provides the aha-develop.trello-import.cards [importer contribution](https://
 
 ## Demo
 
-TODO: Add a short .gif screen recording showing some of the highlights of your extension. This can be recorded using a tool like [LICECap](https://www.cockos.com/licecap/).
-
-![demo](demo.gif)
+![Trello importer extension demo](trello-demo.gif)
 
 ## Installing the extension
 
